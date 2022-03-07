@@ -48,7 +48,7 @@ function FormComponent() {
   };
 
   /**
-   * function that manage the submit
+   * function that saves the data in the store and launch the modal
    * @param {object} data
    */
   const onSubmit = async (data) => {
@@ -81,7 +81,7 @@ function FormComponent() {
           <label htmlFor="first-name">First Name</label>
           <input
             type="text"
-            id="first-name"
+            id={styles.first_name}
             name="firstName"
             {...register("firstName", {
               required: "Dont Forget Your firstName Should Be Cool!",
@@ -99,7 +99,7 @@ function FormComponent() {
           <label htmlFor="last-name">Last Name</label>
           <input
             type="text"
-            id="last-name"
+            id={styles.last_name}
             name="lastName"
             {...register("lastName", {
               required: "Dont Forget Your lastName Should Be Cool!",
@@ -117,7 +117,8 @@ function FormComponent() {
           <label htmlFor="date-of-birth">Date of Birth</label>
           <DatePicker
             name="dateOfBirth"
-            {...register("dateOfBirth")}
+            register={{...register("dateOfBirth")}}
+            onChange={(e)=>e.target.value}
             moreOptions={{
               disableMobile: "true",
               dateFormat: "m/d/Y",
@@ -208,55 +209,4 @@ function FormComponent() {
 
 export default FormComponent;
 
-/**
- * function that saves the data in the store and launch the modal
- * @param {e} event
- * @returns {object} user's info
- */
-// const saveEmployee = (e) => {
-//   e.preventDefault();
-//   if (
-//     UserFirstName !== "" &&
-//     UserLastName !== "" &&
-//     UserBirthDate !== "" &&
-//     UserStartingDate !== "" &&
-//     UserDepartment !== "" &&
-//     UserStreet !== "" &&
-//     UserCity !== "" &&
-//     UserStates !== "" &&
-//     UserZipCode !== "" &&
-//     checkUser(users) === false
-//   ) {
-//     setemployee({
-//       ...employee,
-//       firstName: UserFirstName,
-//       lastName: UserLastName,
-//       dateOfBirth: UserBirthDate,
-//       startDate: UserStartingDate,
-//       department: UserDepartment,
-//       street: UserStreet,
-//       city: UserCity,
-//       state: UserStates,
-//       zipCode: UserZipCode,
-//     });
 
-//     console.log(employee);
-
-//     dispatch(createEmployee(employee));
-//     setModalText("Employee Created!");
-//     setOpenModal(true);
-//   } else if (checkUser(users) === true) {
-//     setModalText("Employee already created!!");
-//     setOpenModal(true);
-//   }
-// };
-
-// const [UserFirstName, setUserFirstName] = useState("");
-// const [UserLastName, setUserLastName] = useState("");
-// const [UserBirthDate, setUserBirthDate] = useState("");
-// const [UserStartingDate, setUserStartingDate] = useState("");
-// const [UserDepartment, setUserDepartment] = useState("");
-// const [UserStreet, setUserStreet] = useState("");
-// const [UserCity, setUserCity] = useState("");
-// const [UserStates, setUserStates] = useState("");
-// const [UserZipCode, setUserZipCode] = useState("");

@@ -40,14 +40,14 @@ function Dropdown({ options, name }) {
         control={control}
         name={name}
         rules={{ required: true }}
-        render={({ field: { onChange, onBlur, name } }) => (
+        render={({ field: { onChange, onBlur, name, ref } }) => (
           <Select
             options={options}
             onChange={onChange}
             onBlur={onBlur}
             name={name}
             styles={customStyles}
-            selected={options[0]}
+            defaultValue={options[0]}
           />
         )}
       />

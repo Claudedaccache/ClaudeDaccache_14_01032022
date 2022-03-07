@@ -78,24 +78,30 @@ function Table({ columns, data, searchValue, setsearchValue }) {
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <th className={styles.sortingContainer}
+                    <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
-                      <span> {column.render("Header")}</span>
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <span className={styles.sortingIcons}>{"▼"}</span>
+                      <div className={styles.sortingContainer}>
+                        <span> {column.render("Header")}</span>
+                        <span>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <span className={styles.sortingIcons}>{"▼"}</span>
+                            ) : (
+                              <span className={styles.sortingIcons}>{"▲"}</span>
+                            )
                           ) : (
-                            <span className={styles.sortingIcons}>{"▲"}</span>
-                          )
-                        ) : (
-                          <div className={styles.sortingIconsContainer}>
-                            <span className={styles.sortingIcons}>{["▼"]}</span>
-                            <span className={styles.sortingIcons}>{["▲"]}</span>
-                          </div>
-                        )}
-                      </span>
+                            <div className={styles.sortingIconsContainer}>
+                              <span className={styles.sortingIcons}>
+                                {["▼"]}
+                              </span>
+                              <span className={styles.sortingIcons}>
+                                {["▲"]}
+                              </span>
+                            </div>
+                          )}
+                        </span>
+                      </div>
                     </th>
                   ))}
                 </tr>
@@ -134,7 +140,7 @@ function Table({ columns, data, searchValue, setsearchValue }) {
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canPreviousPage}
               >
-                {pageCount+1}
+                {pageCount + 1}
               </button>
               <button
                 className={styles.pages}

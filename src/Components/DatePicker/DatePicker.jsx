@@ -26,9 +26,11 @@ function DatePicker({ moreOptions, name }) {
         control={control}
         name={name}
         rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value, name } }) => (
+        render={({
+          field: { onChange, onBlur, value, name, ref },
+        }) => (
           <Flatpickr
-            selected={format({ value } || '')}
+            selected={format({ value } || "")}
             onChange={onChange}
             onBlur={onBlur}
             name={name}

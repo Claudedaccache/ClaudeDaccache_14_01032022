@@ -55,11 +55,21 @@ button {
 }
 
 .sortingIconsContainer {
-  display: inline-block;
+  display: flex;
+  flex-direction: column-reverse;
+
 }
+
+.sortingContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 .sortingIcons {
   display: inline-block;
   font-size: 0.7rem;
+  margin-left: 0.5rem;
+
 }
 .sortingIcons:active,
 .sortingIcons:hover {
