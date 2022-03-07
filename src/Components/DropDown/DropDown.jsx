@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import Select from "react-select";
 import styles from "../DropDown/DropDown.module.css";
+import { Controller, useForm } from "react-hook-form";
 
-function Dropdown({ options, selectedValue }) {
+function Dropdown({ options, name }) {
+  const { control } = useForm();
+
   useEffect(() => {
     const formatDataInfo = (options) => {
       const alldata = options.map(
@@ -33,11 +36,20 @@ function Dropdown({ options, selectedValue }) {
 
   return (
     <div className={styles.dropdownContainer}>
-      <Select
-        options={options}
-        styles={customStyles}
-        onChange={(e) => selectedValue(e.value)}
-        defaultValue={options[0]}
+      <Controller
+        control={control}
+        name={name}
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, name } }) => (
+          <Select
+            options={options}
+            onChange={onChange}
+            onBlur={onBlur}
+            name={name}
+            styles={customStyles}
+            selected={options[0]}
+          />
+        )}
       />
     </div>
   );
