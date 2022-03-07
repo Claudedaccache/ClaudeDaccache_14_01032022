@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styles from "../TableComponent/TableComponent.module.css";
 import { useTable, usePagination, useSortBy } from "react-table";
 
+
 function Table({ columns, data, searchValue, setsearchValue }) {
   const {
     page,
@@ -83,7 +84,7 @@ function Table({ columns, data, searchValue, setsearchValue }) {
                     >
                       <div className={styles.sortingContainer}>
                         <span> {column.render("Header")}</span>
-                        <span>
+                        <span className={styles.IconsContainer}>
                           {column.isSorted ? (
                             column.isSortedDesc ? (
                               <span className={styles.sortingIcons}>{"▼"}</span>

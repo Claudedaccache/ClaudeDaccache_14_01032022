@@ -57,20 +57,36 @@ button {
 .sortingIconsContainer {
   display: flex;
   flex-direction: column-reverse;
+}
+.IconsContainer{
+  margin-left: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 
 }
 
 .sortingContainer{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .sortingIcons {
   display: inline-block;
   font-size: 0.7rem;
-  margin-left: 0.5rem;
+  color: rgb(206, 204, 204);
 
 }
+
+.sortingIcons > svg{
+ background-color: red;
+ padding: 0;
+}
+
+
 .sortingIcons:active,
 .sortingIcons:hover {
   color: blue;
@@ -88,3 +104,5 @@ button {
 .even:hover {
   background-color: rgb(233, 233, 233);
 }
+
+
