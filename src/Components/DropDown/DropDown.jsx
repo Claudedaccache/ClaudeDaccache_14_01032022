@@ -15,9 +15,30 @@ function Dropdown({ options, selectedValue }) {
     formatDataInfo(options);
   }, [options]);
 
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      background: "#F0F0F0",
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base) => ({
+      ...base,
+      padding: 0,
+    }),
+  };
+
   return (
     <div className={styles.dropdownContainer}>
-      <Select options={options} onChange={(e) => selectedValue(e.label)} defaultValue={options[0]}/>
+      <Select
+        options={options}
+        styles={customStyles}
+        onChange={(e) => selectedValue(e.value)}
+        defaultValue={options[0]}
+      />
     </div>
   );
 }

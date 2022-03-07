@@ -10,7 +10,6 @@ function TableComponent() {
   const [searchValue, setsearchValue] = useState("");
 
   const users = useSelector((state) => state.employees);
-
   useEffect(() => {
     setData(users);
   }, [users]);

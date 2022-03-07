@@ -12,25 +12,21 @@ import Dropdown from "../DropDown/DropDown";
 
 function FormComponent() {
   const users = useSelector((state) => state.employees);
-  const [StartingDate, setStartingDate] = useState("");
-  const [birthDate, setbirthDate] = useState("");
-  const [States, setStates] = useState("");
-  const [Department, setDepartment] = useState("");
+
+  const [UserFirstName, setUserFirstName] = useState("");
+  const [UserLastName, setUserLastName] = useState("");
+  const [UserBirthDate, setUserBirthDate] = useState("");
+  const [UserStartingDate, setUserStartingDate] = useState("");
+  const [UserDepartment, setUserDepartment] = useState("");
+  const [UserStreet, setUserStreet] = useState("");
+  const [UserCity, setUserCity] = useState("");
+  const [UserStates, setUserStates] = useState("");
+  const [UserZipCode, setUserZipCode] = useState("");
+
   const [openModal, setOpenModal] = useState(false);
   const [ModalText, setModalText] = useState("Employee Created!");
-  const [employee, setEmployee] = useState(users);
+  const [employee, setemployee] = useState(users[0]);
   const dispatch = useDispatch();
-
-  /**
-   * function that handle the value of the inputs on change
-   * @param {*} param
-   * @returns {object} employee info.
-   */
-
-  // const handleChange = ({ currentTarget }) => {
-  //   const { name, value } = currentTarget;
-  //   setEmployee({ ...employee, [name]: value });
-  // };
 
   /**
    * function that checks if user is already created and included in the users array
@@ -47,8 +43,6 @@ function FormComponent() {
     return selectedUser ? true : false;
   };
 
-  console.log(States, Department);
-
   /**
    * function that saves the data in the store and launch the modal
    * @param {e} event
@@ -57,17 +51,32 @@ function FormComponent() {
   const saveEmployee = (e) => {
     e.preventDefault();
     if (
-      employee.firstName !== undefined &&
-      employee.lastName !== undefined &&
-      employee.dateOfBirth !== undefined &&
-      employee.startDate !== undefined &&
-      employee.department !== undefined &&
-      employee.street !== undefined &&
-      employee.city !== undefined &&
-      employee.state !== undefined &&
-      employee.zipCode !== undefined &&
+      UserFirstName !== "" &&
+      UserLastName !== "" &&
+      UserBirthDate !== "" &&
+      UserStartingDate !== "" &&
+      UserDepartment !== "" &&
+      UserStreet !== "" &&
+      UserCity !== "" &&
+      UserStates !== "" &&
+      UserZipCode !== "" &&
       checkUser(users) === false
     ) {
+      setemployee({
+        ...employee,
+        firstName: UserFirstName,
+        lastName: UserLastName,
+        dateOfBirth: UserBirthDate,
+        startDate: UserStartingDate,
+        department: UserDepartment,
+        street: UserStreet,
+        city: UserCity,
+        state: UserStates,
+        zipCode: UserZipCode,
+      });
+
+      console.log(employee);
+
       dispatch(createEmployee(employee));
       setModalText("Employee Created!");
       setOpenModal(true);
@@ -96,9 +105,7 @@ function FormComponent() {
             type="text"
             id="first-name"
             name="firstName"
-            onChange={(e) =>
-              setEmployee({ ...employee, firstName: e.target.value })
-            }
+            onChange={(e) => setUserFirstName(e.target.value)}
           />
 
           <label htmlFor="last-name">Last Name</label>
@@ -106,27 +113,27 @@ function FormComponent() {
             type="text"
             id="last-name"
             name="lastName"
-            onChange={(e) =>
-              setEmployee({ ...employee, lastName: e.target.value })
-            }
+            onChange={(e) => setUserLastName(e.target.value)}
           />
 
           <label htmlFor="date-of-birth">Date of Birth</label>
           <DatePicker
-            mainValue={birthDate}
-            EditedValue={setbirthDate}
-            moreOptions={{ maxDate: new Date().fp_incr(-6570) }}
-            // onChange={setEmployee({ ...employee, dateOfBirth: setbirthDate })}
+            mainValue={UserBirthDate}
+            EditedValue={setUserBirthDate}
+            moreOptions={{
+              disableMobile: "true",
+              dateFormat: "m/d/Y",
+              maxDate: new Date().fp_incr(-6570),
+            }}
           />
 
           <label htmlFor="start-date">Start Date</label>
           <DatePicker
-            mainValue={StartingDate}
-            EditedValue={setStartingDate}
-            // onChange={(e) =>
-            //   setEmployee(console.log(e), { ...employee, startDate: e })
-            // }
+            mainValue={UserStartingDate}
+            EditedValue={setUserStartingDate}
             moreOptions={{
+              disableMobile: "true",
+              dateFormat: "m/d/Y",
               disable: [
                 function (date) {
                   return date.getDay() === 0 || date.getDay() === 6;
@@ -142,33 +149,27 @@ function FormComponent() {
               id="street"
               type="text"
               name="street"
-              onChange={(e) =>
-                setEmployee({ ...employee, street: e.target.value })
-              }
+              onChange={(e) => setUserStreet(e.target.value)}
             />
             <label htmlFor="city">City</label>
             <input
               id="city"
               type="text"
               name="city"
-              onChange={(e) =>
-                setEmployee({ ...employee, city: e.target.value })
-              }
+              onChange={(e) => setUserCity(e.target.value)}
             />
             <label htmlFor="state">State</label>
-            <Dropdown options={allStates} selectedValue={setStates} />
+            <Dropdown options={allStates} selectedValue={setUserStates} />
             <label htmlFor="zip-code">Zip Code</label>
             <input
               id="zip-code"
               type="number"
               name="zipCode"
-              onChange={(e) =>
-                setEmployee({ ...employee, zipCode: e.target.value })
-              }
+              onChange={(e) => setUserZipCode(e.target.value)}
             />
           </fieldset>
           <label htmlFor="department">Department</label>
-          <Dropdown options={department} selectedValue={setDepartment} />
+          <Dropdown options={department} selectedValue={setUserDepartment} />
         </form>
         <div className={styles.SaveBtnContainer}>
           <button className={styles.SaveBtn} onClick={(e) => saveEmployee(e)}>
