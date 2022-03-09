@@ -16,7 +16,7 @@ function Dropdown({ options, name }) {
       return alldata;
     };
     formatDataInfo(options);
-  }, [options]);
+  }, []);
 
   const customStyles = {
     control: (base, state) => ({

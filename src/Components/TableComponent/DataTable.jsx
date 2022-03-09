@@ -30,7 +30,7 @@ function Table({ columns, data, searchValue, setsearchValue }) {
 
   useEffect(() => {
     const alternateRows = () => {
-      var rows = document.getElementsByTagName("tr");
+      let rows = document.getElementsByTagName("tr");
       for (let i = 0; i < rows.length; i++) {
         if (i % 2 === 0) {
           rows[i].className = `${styles.even}`;
@@ -40,7 +40,7 @@ function Table({ columns, data, searchValue, setsearchValue }) {
       }
     };
     alternateRows();
-  }, []);
+  }, [data]);
 
   return (
     <>

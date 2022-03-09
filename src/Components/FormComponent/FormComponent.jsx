@@ -118,7 +118,6 @@ function FormComponent() {
           <DatePicker
             name="dateOfBirth"
             register={{...register("dateOfBirth")}}
-            onChange={(e)=>e.target.value}
             moreOptions={{
               disableMobile: "true",
               dateFormat: "m/d/Y",
