@@ -3,7 +3,7 @@ import Select from "react-select";
 import styles from "../DropDown/DropDown.module.css";
 import { Controller, useForm } from "react-hook-form";
 
-function Dropdown({ options, name }) {
+const Dropdown = React.forwardRef(({ options, name }, register) => {
   const { control } = useForm();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function Dropdown({ options, name }) {
         control={control}
         name={name}
         rules={{ required: true }}
-        render={({ field: { onChange, onBlur, name, ref } }) => (
+        render={({ field: { onChange, onBlur, name} }) => (
           <Select
             options={options}
             onChange={onChange}
@@ -48,10 +48,12 @@ function Dropdown({ options, name }) {
             name={name}
             styles={customStyles}
             defaultValue={options[0]}
+            ref={register}
+
           />
         )}
       />
     </div>
   );
-}
+})
 export default Dropdown;

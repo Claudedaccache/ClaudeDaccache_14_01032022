@@ -128,7 +128,7 @@ function FormComponent() {
           <label htmlFor="start-date">Start Date</label>
           <DatePicker
             name="startDate"
-            {...register("startDate")}
+            register={{...register("startDate")}}
             moreOptions={{
               disableMobile: "true",
               dateFormat: "m/d/Y",
@@ -169,7 +169,7 @@ function FormComponent() {
             )}
 
             <label htmlFor="state">State</label>
-            <Dropdown name="state" {...register("state")} options={allStates} />
+            <Dropdown name="state" register ={{...register("state")}} options={allStates} />
 
             <label htmlFor="zip-code">Zip Code</label>
             <input
@@ -188,7 +188,7 @@ function FormComponent() {
           <Dropdown
             options={department}
             name="department"
-            {...register("department")}
+            register={{...register("department")}}
           />
         </form>
         <div className={styles.SaveBtnContainer}>

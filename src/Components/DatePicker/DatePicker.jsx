@@ -3,7 +3,7 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/airbnb.css";
 import { Controller, useForm } from "react-hook-form";
 
-function DatePicker({ moreOptions, name, register }) {
+const DatePicker = React.forwardRef(({ moreOptions, name }, register) => {
   const { control } = useForm();
 
   // /**
@@ -26,20 +26,20 @@ function DatePicker({ moreOptions, name, register }) {
         name={name}
         control={control}
         rules={{ required: true }}
-        render={({ onChange, onBlur, value, name }) => (
+        render={({ onChange, onBlur, value }) => (
           <>
             <Flatpickr
               selected={format({ value } || "")}
               onChange={onChange}
               onBlur={onBlur}
-              name={name}
               options={moreOptions}
+
             />
           </>
         )}
       />
     </div>
   );
-}
+})
 
 export default DatePicker;
