@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "../TableComponent/TableComponent.module.css";
 import { useTable, usePagination, useSortBy } from "react-table";
 
-
 function Table({ columns, data, searchValue, setsearchValue }) {
   const {
     page,
@@ -126,7 +125,11 @@ function Table({ columns, data, searchValue, setsearchValue }) {
 
           <div className={`pagination ${styles.LowerTable}`}>
             <span>
-              Showing 1 to {pageSize >= data.length ? data.length : pageSize} of{" "}
+              Showing {' '}
+              {data.length
+                ? ` 1 to ${pageSize >= data.length ? data.length : pageSize}`
+                : 0}
+              {' '} of {' '}
               {data ? data.length : 0} entries
             </span>
             <div className={styles.directions}>
@@ -136,20 +139,24 @@ function Table({ columns, data, searchValue, setsearchValue }) {
               >
                 {"Previous"}
               </button>
-              <button
-                className={styles.pages}
-                onClick={() => gotoPage(pageCount - 1)}
-                disabled={!canPreviousPage}
-              >
-                {pageCount + 1}
-              </button>
-              <button
-                className={styles.pages}
-                onClick={() => gotoPage(pageCount + 1)}
-                disabled={!canPreviousPage}
-              >
-                {pageCount + 2}
-              </button>
+              {data.length > pageSize ? (
+                <button
+                  className={styles.pages}
+                  onClick={() => gotoPage(pageCount - 1)}
+                  // disabled={!canPreviousPage}
+                >
+                  {pageCount + 1}
+                </button>
+              ) : (
+                ""
+              )}
+              {/* <button
+              //   className={styles.pages}
+              //   onClick={() => gotoPage(pageCount + 1)}
+              //   disabled={!canPreviousPage}
+              // >
+              //   {pageCount + 2}
+              // </button> */}
               <button onClick={() => nextPage()} disabled={!canNextPage}>
                 {"Next"}
               </button>

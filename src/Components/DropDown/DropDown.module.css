@@ -1,12 +1,13 @@
-.dropdownContainer{
+/* .dropdownContainer {
   /* display: flex;
   flex-direction: row;
   /* justify-content: flex-start; */
   /* margin-top: 1rem;
   width: 100%;
-  max-width: 50rem; */ 
+  max-width: 50rem; */
+
+
+.select {
+  background-color: #F0F0F0;
+  min-width: 200px;
 }
-
-
-
-

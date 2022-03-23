@@ -6,10 +6,12 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createEmployee } from "../../Redux/Employees/AuthActions";
-import DatePicker from "../DatePicker/DatePicker";
 import department from "../../Data/DepartmentData";
 import Dropdown from "../DropDown/DropDown";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import DateSection from "../DatePicker/DateSection";
+import { addDays, getDay } from "date-fns";
+import {formatDate} from "../DatePicker/DateSection"
 
 const wait = (duration = 1000) => {
   return new Promise((resolve) => {
@@ -21,10 +23,12 @@ function FormComponent() {
   const users = useSelector((state) => state.employees);
   const [openModal, setOpenModal] = useState(false);
   const [ModalText, setModalText] = useState("Employee Created!");
+
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isValid, isSubmitted, isSubmitSuccessful },
   } = useForm({
     mode: "onTouched",
@@ -47,10 +51,21 @@ function FormComponent() {
     return selectedUser ? true : false;
   };
 
-  /**
-   * function that saves the data in the store and launch the modal
-   * @param {object} data
-   */
+ /**
+  * Given a date, return true if the date is a weekday, and false if it is a weekend
+  * @returns The function isWeekday is being called with the date of January 1st, 2017. The function
+  * returns true if the day is not a weekend and false if it is a weekend.
+  */
+  const isWeekday = (date) => {
+    const day = getDay(date);
+    return day !== 0 && day !== 6;
+  };
+
+/**
+ * It creates a new employee and adds it to the list of employees.
+ * @param {object} data
+
+ */
   const onSubmit = async (data) => {
     await wait(1000);
     if (isSubmitSuccessful === true && checkUser(users, data) === false) {
@@ -84,7 +99,7 @@ function FormComponent() {
             id={styles.first_name}
             name="firstName"
             {...register("firstName", {
-              required: "Dont Forget Your firstName Should Be Cool!",
+              required: "FirstName is required",
               minLength: {
                 value: 3,
                 message:
@@ -102,7 +117,7 @@ function FormComponent() {
             id={styles.last_name}
             name="lastName"
             {...register("lastName", {
-              required: "Dont Forget Your lastName Should Be Cool!",
+              required: "LastName is required",
               minLength: {
                 value: 3,
                 message:
@@ -115,29 +130,36 @@ function FormComponent() {
           )}
 
           <label htmlFor="date-of-birth">Date of Birth</label>
-          <DatePicker
+          <Controller
+            control={control}
             name="dateOfBirth"
-            register={{...register("dateOfBirth")}}
-            moreOptions={{
-              disableMobile: "true",
-              dateFormat: "m/d/Y",
-              maxDate: new Date().fp_incr(-6570),
-            }}
+            render={({ field }) => (
+              <DateSection
+                onChange={(e) => field.onChange(e)}
+                onBlur={field.onBlur}
+                dateFormat="MM/dd/yyyy"
+                maxDate={addDays(new Date(), -6570)}
+                selected={field.value}
+                placeholder="Select date"
+              />
+            )}
           />
 
           <label htmlFor="start-date">Start Date</label>
-          <DatePicker
+
+          <Controller
+            control={control}
             name="startDate"
-            register={{...register("startDate")}}
-            moreOptions={{
-              disableMobile: "true",
-              dateFormat: "m/d/Y",
-              disable: [
-                function (date) {
-                  return date.getDay() === 0 || date.getDay() === 6;
-                },
-              ],
-            }}
+            render={({ field }) => (
+              <DateSection
+                onChange={(e) => field.onChange(e)}
+                onBlur={field.onBlur}
+                dateFormat="MM/dd/yyyy"
+                selected={field.value}
+                filterDate={isWeekday}
+                placeholder="Select date"
+              />
+            )}
           />
 
           <fieldset className={styles.fieldsetContainer}>
@@ -148,7 +170,7 @@ function FormComponent() {
               type="text"
               name="street"
               {...register("street", {
-                required: "Dont Forget Your Street",
+                required: "Street is required",
               })}
             />
             {errors.street && (
@@ -161,7 +183,7 @@ function FormComponent() {
               type="text"
               name="city"
               {...register("city", {
-                required: "Dont Forget Your City",
+                required: "City is required",
               })}
             />
             {errors.city && (
@@ -169,7 +191,7 @@ function FormComponent() {
             )}
 
             <label htmlFor="state">State</label>
-            <Dropdown name="state" register ={{...register("state")}} options={allStates} />
+            <Dropdown {...register("state")} options={allStates} />
 
             <label htmlFor="zip-code">Zip Code</label>
             <input
@@ -177,7 +199,7 @@ function FormComponent() {
               type="number"
               name="zipCode"
               {...register("zipCode", {
-                required: "Dont Forget Your ZipCode",
+                required: "ZipCode is required",
               })}
             />
             {errors.zipCode && (
@@ -185,11 +207,7 @@ function FormComponent() {
             )}
           </fieldset>
           <label htmlFor="department">Department</label>
-          <Dropdown
-            options={department}
-            name="department"
-            register={{...register("department")}}
-          />
+          <Dropdown options={department} {...register("department")} />
         </form>
         <div className={styles.SaveBtnContainer}>
           <button
@@ -207,5 +225,3 @@ function FormComponent() {
 }
 
 export default FormComponent;
-
-
