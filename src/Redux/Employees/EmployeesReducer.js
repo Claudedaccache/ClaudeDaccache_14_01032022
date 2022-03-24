@@ -1,4 +1,4 @@
-import * as actions from "../Employees/ActionTypes";
+import * as actions from "./ActionTypes";
 
 const initialState = [
   {
@@ -14,7 +14,7 @@ const initialState = [
   },
 ];
 
-const AuthToken = (state = initialState, action) => {
+const EmployeesReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.ADD_EMPLOYEE:
       state = [...state, action.payload];
@@ -24,4 +24,4 @@ const AuthToken = (state = initialState, action) => {
   }
 };
 
-export default AuthToken;
+export default EmployeesReducer;

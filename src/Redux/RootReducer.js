@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import reducer from "../Redux/Employees/AuthReducer"
+import EmployeesReducer from "../Redux/Employees/EmployeesReducer"
 const rootReducer = combineReducers({
-  employees: reducer,
+  employees: EmployeesReducer,
 
 
 });

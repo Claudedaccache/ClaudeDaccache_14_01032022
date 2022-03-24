@@ -1,4 +1,4 @@
-import * as actions from "../Employees/ActionTypes";
+import * as actions from "./ActionTypes";
 
 export const createEmployee = (user) => {
   return {

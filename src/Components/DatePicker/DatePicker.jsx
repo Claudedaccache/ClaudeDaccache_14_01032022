@@ -17,11 +17,11 @@ export const formatDate = (inputDate) => {
       date.getDate() +
       "/" +
       date.getFullYear()
-    ).toString();
+    )
   }
 };
 
-const DateSection = forwardRef(
+const DatePicker = forwardRef(
   (
     {
       onChange,
@@ -53,4 +53,4 @@ const DateSection = forwardRef(
   }
 );
 
-export default DateSection;
+export default DatePicker;

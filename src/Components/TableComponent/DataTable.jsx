@@ -11,10 +11,10 @@ function Table({ columns, data, searchValue, setsearchValue }) {
     prepareRow,
     canPreviousPage,
     canNextPage,
-    pageCount,
     gotoPage,
     nextPage,
     previousPage,
+    pageOptions,
     setPageSize,
     state: { pageSize },
   } = useTable(
@@ -28,6 +28,9 @@ function Table({ columns, data, searchValue, setsearchValue }) {
   );
 
   useEffect(() => {
+    /**
+     * It changes the color of the rows to alternate colors.
+     */
     const alternateRows = () => {
       let rows = document.getElementsByTagName("tr");
       for (let i = 0; i < rows.length; i++) {
@@ -92,7 +95,9 @@ function Table({ columns, data, searchValue, setsearchValue }) {
                             )
                           ) : (
                             <div className={styles.sortingIconsContainer}>
-                              <span className={styles.sortingIcons}>
+                              <span
+                                className={`${styles.sortingIcons} ${styles.downIcons}`}
+                              >
                                 {["▼"]}
                               </span>
                               <span className={styles.sortingIcons}>
@@ -125,39 +130,36 @@ function Table({ columns, data, searchValue, setsearchValue }) {
 
           <div className={`pagination ${styles.LowerTable}`}>
             <span>
-              Showing {' '}
+              Showing{" "}
               {data.length
                 ? ` 1 to ${pageSize >= data.length ? data.length : pageSize}`
-                : 0}
-              {' '} of {' '}
-              {data ? data.length : 0} entries
+                : 0}{" "}
+              of {data ? data.length : 0} entries
             </span>
             <div className={styles.directions}>
               <button
+                className={styles.PrevBtn}
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
                 {"Previous"}
               </button>
-              {data.length > pageSize ? (
-                <button
-                  className={styles.pages}
-                  onClick={() => gotoPage(pageCount - 1)}
-                  // disabled={!canPreviousPage}
-                >
-                  {pageCount + 1}
-                </button>
-              ) : (
-                ""
-              )}
-              {/* <button
-              //   className={styles.pages}
-              //   onClick={() => gotoPage(pageCount + 1)}
-              //   disabled={!canPreviousPage}
-              // >
-              //   {pageCount + 2}
-              // </button> */}
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {data.length
+                ? pageOptions.map((itm) => (
+                    <button
+                      key={itm}
+                      className={styles.pagesNbr}
+                      onClick={() => gotoPage(itm)}
+                    >
+                      {itm + 1}
+                    </button>
+                  ))
+                : ""}
+              <button
+                className={styles.NextBtn}
+                onClick={() => nextPage()}
+                disabled={!canNextPage}
+              >
                 {"Next"}
               </button>
             </div>

@@ -5,25 +5,17 @@ import allStates from "../../Data/StatesData";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { createEmployee } from "../../Redux/Employees/AuthActions";
+import { createEmployee } from "../../Redux/Employees/EmployeesActions";
 import department from "../../Data/DepartmentData";
 import Dropdown from "../DropDown/DropDown";
 import { Controller, useForm } from "react-hook-form";
-import DateSection from "../DatePicker/DateSection";
+import DatePicker, { formatDate } from "../DatePicker/DatePicker";
 import { addDays, getDay } from "date-fns";
-import {formatDate} from "../DatePicker/DateSection"
-
-const wait = (duration = 1000) => {
-  return new Promise((resolve) => {
-    window.setTimeout(resolve, duration);
-  });
-};
 
 function FormComponent() {
   const users = useSelector((state) => state.employees);
   const [openModal, setOpenModal] = useState(false);
   const [ModalText, setModalText] = useState("Employee Created!");
-
   const dispatch = useDispatch();
   const {
     register,
@@ -37,43 +29,43 @@ function FormComponent() {
   });
 
   /**
-   * function that checks if user is already created and included in the users array
-   * @param {array} users
+   * function that checks if employee already exist and been created and included in the employees array
+   * @param {array} employees
    * @returns {boolean} true if user was found and false if not
    */
 
-  const checkUser = (users, data) => {
-    let selectedUser = users.find(
-      (user) =>
-        user.firstName === data.firstName && user.lastName === data.lastName
-      // user.dateOfBirth === data.dateOfBirth
+  const checkEmployee = (employees, data) => {
+    let selectedEmployee = employees.find(
+      (employee) =>
+      employee.firstName === data.firstName &&
+      employee.lastName === data.lastName &&
+        formatDate(data.dateOfBirth.toString()) ===
+          formatDate(employee.dateOfBirth.toString())
     );
-    return selectedUser ? true : false;
+    return selectedEmployee ? true : false;
   };
 
- /**
-  * Given a date, return true if the date is a weekday, and false if it is a weekend
-  * @returns The function isWeekday is being called with the date of January 1st, 2017. The function
-  * returns true if the day is not a weekend and false if it is a weekend.
-  */
+  /**
+   * Given a date, return true if the date is a weekday, and false if it is a weekend
+   * @returns The function isWeekday is being called with the date of January 1st, 2017. The function
+   * returns true if the day is not a weekend and false if it is a weekend.
+   */
   const isWeekday = (date) => {
     const day = getDay(date);
     return day !== 0 && day !== 6;
   };
 
-/**
- * It creates a new employee and adds it to the list of employees.
- * @param {object} data
-
- */
+  /**
+   * It creates a new employee and adds it to the list of employees.
+   * @param {object} data
+   */
   const onSubmit = async (data) => {
-    await wait(1000);
-    if (isSubmitSuccessful === true && checkUser(users, data) === false) {
+    if (isSubmitSuccessful === true && checkEmployee(users, data) === false) {
       console.log(data);
       dispatch(createEmployee(data));
       setModalText("Employee Created!");
       setOpenModal(true);
-    } else if (checkUser(users, data) === true) {
+    } else if (checkEmployee(users, data) === true) {
       setModalText("Employee already created!!");
       setOpenModal(true);
     }
@@ -103,7 +95,7 @@ function FormComponent() {
               minLength: {
                 value: 3,
                 message:
-                  "Dont Forget Your firstName Should at least 3 characters!",
+                  "Your firstName Should at least 3 characters!",
               },
             })}
           />
@@ -121,7 +113,7 @@ function FormComponent() {
               minLength: {
                 value: 3,
                 message:
-                  "Dont Forget Your lastName Should at least 3 characters!",
+                  "Your lastName Should at least 3 characters!",
               },
             })}
           />
@@ -133,8 +125,9 @@ function FormComponent() {
           <Controller
             control={control}
             name="dateOfBirth"
+            rules={{ required: "Date Of Birth is required" }}
             render={({ field }) => (
-              <DateSection
+              <DatePicker
                 onChange={(e) => field.onChange(e)}
                 onBlur={field.onBlur}
                 dateFormat="MM/dd/yyyy"
@@ -144,14 +137,19 @@ function FormComponent() {
               />
             )}
           />
+          {errors.dateOfBirth && (
+            <span className={styles.errorMsg}>
+              {errors.dateOfBirth.message}
+            </span>
+          )}
 
           <label htmlFor="start-date">Start Date</label>
-
           <Controller
             control={control}
             name="startDate"
+            rules={{ required: "Start Date is required" }}
             render={({ field }) => (
-              <DateSection
+              <DatePicker
                 onChange={(e) => field.onChange(e)}
                 onBlur={field.onBlur}
                 dateFormat="MM/dd/yyyy"
@@ -161,6 +159,9 @@ function FormComponent() {
               />
             )}
           />
+          {errors.startDate && (
+            <span className={styles.errorMsg}>{errors.startDate.message}</span>
+          )}
 
           <fieldset className={styles.fieldsetContainer}>
             <legend className={styles.address}>Address</legend>

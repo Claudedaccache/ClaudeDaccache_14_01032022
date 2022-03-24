@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "../TableComponent/TableComponent.module.css";
 import Table from "./DataTable";
-// import ReactDatatable from "react-data-table-component";
+import { formatDate } from "../DatePicker/DatePicker";
 
 function TableComponent() {
   const [data, setData] = useState([]);
@@ -11,7 +11,12 @@ function TableComponent() {
 
   const users = useSelector((state) => state.employees);
   useEffect(() => {
-    setData(users);
+    const formatedUsers = users.map((user) => {
+      user.dateOfBirth = formatDate(user.dateOfBirth.toString()) ?? "";
+      user.startDate = formatDate(user.startDate.toString()) ?? "";
+      return user;
+    });
+    setData(formatedUsers);
   }, [users]);
 
   const columns = [
