@@ -88,7 +88,10 @@ function FormComponent() {
           <label htmlFor="first-name">First Name</label>
           <input
             type="text"
-            id={styles.first_name}
+            aria-labelledby="first-name"
+            aria-required="true"
+            id="first-name"
+            className={styles.first_name}
             name="firstName"
             {...register("firstName", {
               required: "FirstName is required",
@@ -106,7 +109,10 @@ function FormComponent() {
           <label htmlFor="last-name">Last Name</label>
           <input
             type="text"
-            id={styles.last_name}
+            aria-labelledby="last-name"
+            aria-required="true"
+            id="last-name"
+            className={styles.last_name}
             name="lastName"
             {...register("lastName", {
               required: "LastName is required",
@@ -121,10 +127,12 @@ function FormComponent() {
             <span className={styles.errorMsg}>{errors.lastName.message}</span>
           )}
 
-          <label htmlFor="date-of-birth">Date of Birth</label>
+          {/* <label htmlFor="date-of-birth">Date of Birth</label> */}
           <Controller
             control={control}
             name="dateOfBirth"
+            aria-labelledby="dateOfBirth"
+            aria-required="true"
             rules={{ required: "Date Of Birth is required" }}
             render={({ field }) => (
               <DatePicker
@@ -134,6 +142,8 @@ function FormComponent() {
                 maxDate={addDays(new Date(), -6570)}
                 selected={field.value}
                 placeholder="Select date"
+                label="Date of Birth"
+                labelFor="date-of-birth"
               />
             )}
           />
@@ -143,10 +153,12 @@ function FormComponent() {
             </span>
           )}
 
-          <label htmlFor="start-date">Start Date</label>
+          {/* <label htmlFor="start-date">Start Date</label> */}
           <Controller
             control={control}
             name="startDate"
+            aria-labelledby="startDate"
+            aria-required="true"
             rules={{ required: "Start Date is required" }}
             render={({ field }) => (
               <DatePicker
@@ -156,6 +168,8 @@ function FormComponent() {
                 selected={field.value}
                 filterDate={isWeekday}
                 placeholder="Select date"
+                label="Start Date"
+                labelFor="start-date"
               />
             )}
           />
@@ -168,6 +182,8 @@ function FormComponent() {
             <label htmlFor="street">Street</label>
             <input
               id="street"
+              aria-labelledby="street"
+            aria-required="true"
               type="text"
               name="street"
               {...register("street", {
@@ -182,6 +198,8 @@ function FormComponent() {
             <input
               id="city"
               type="text"
+              aria-labelledby="city"
+              aria-required="true"
               name="city"
               {...register("city", {
                 required: "City is required",
@@ -198,6 +216,8 @@ function FormComponent() {
             <input
               id="zip-code"
               type="number"
+              aria-labelledby="zip-code"
+              aria-required="true"
               name="zipCode"
               {...register("zipCode", {
                 required: "ZipCode is required",

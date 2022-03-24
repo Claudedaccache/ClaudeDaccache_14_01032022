@@ -61,7 +61,7 @@ a {
   opacity: 0.8;
 }
 
-#first_name,
-#last_name {
+.first_name,
+.last_name {
   width: 66%;
 }

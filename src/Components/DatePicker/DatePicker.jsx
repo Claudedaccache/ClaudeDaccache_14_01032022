@@ -29,6 +29,8 @@ const DatePicker = forwardRef(
       onBlur,
       dateFormat,
       options,
+      label,
+      labelFor,
       selected,
       placeholder,
       ...props
@@ -37,6 +39,8 @@ const DatePicker = forwardRef(
   ) => {
     return (
       <div>
+       <label htmlFor={labelFor}>{label}</label>
+
         <ReactDatePicker
           {...props}
           onChange={onChange}
@@ -47,6 +51,7 @@ const DatePicker = forwardRef(
           ref={ref}
           dateFormat={dateFormat}
           maxDate={maxDate}
+          id={labelFor}
         />
       </div>
     );

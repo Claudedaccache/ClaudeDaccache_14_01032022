@@ -8,8 +8,8 @@ import { formatDate } from "../DatePicker/DatePicker";
 function TableComponent() {
   const [data, setData] = useState([]);
   const [searchValue, setsearchValue] = useState("");
-
   const users = useSelector((state) => state.employees);
+
   useEffect(() => {
     const formatedUsers = users.map((user) => {
       user.dateOfBirth = formatDate(user.dateOfBirth.toString()) ?? "";
