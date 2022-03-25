@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../FormComponent/FormComponent.module.css";
-import Modal from "../Modal/Modal";
+// import Modal from "../Modal/Modal";
 import allStates from "../../Data/StatesData";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -11,10 +11,11 @@ import Dropdown from "../DropDown/DropDown";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker, { formatDate } from "../DatePicker/DatePicker";
 import { addDays, getDay } from "date-fns";
+import { Modal } from "@claudedacc/modal";
 
 function FormComponent() {
   const users = useSelector((state) => state.employees);
-  const [openModal, setOpenModal] = useState(false);
+  const [OpenModal, setOpenModal] = useState(false);
   const [ModalText, setModalText] = useState("Employee Created!");
   const dispatch = useDispatch();
   const {
@@ -37,8 +38,8 @@ function FormComponent() {
   const checkEmployee = (employees, data) => {
     let selectedEmployee = employees.find(
       (employee) =>
-      employee.firstName === data.firstName &&
-      employee.lastName === data.lastName &&
+        employee.firstName === data.firstName &&
+        employee.lastName === data.lastName &&
         formatDate(data.dateOfBirth.toString()) ===
           formatDate(employee.dateOfBirth.toString())
     );
@@ -97,8 +98,7 @@ function FormComponent() {
               required: "FirstName is required",
               minLength: {
                 value: 3,
-                message:
-                  "Your firstName Should at least 3 characters!",
+                message: "Your firstName Should at least 3 characters!",
               },
             })}
           />
@@ -118,8 +118,7 @@ function FormComponent() {
               required: "LastName is required",
               minLength: {
                 value: 3,
-                message:
-                  "Your lastName Should at least 3 characters!",
+                message: "Your lastName Should at least 3 characters!",
               },
             })}
           />
@@ -127,7 +126,6 @@ function FormComponent() {
             <span className={styles.errorMsg}>{errors.lastName.message}</span>
           )}
 
-          {/* <label htmlFor="date-of-birth">Date of Birth</label> */}
           <Controller
             control={control}
             name="dateOfBirth"
@@ -153,7 +151,6 @@ function FormComponent() {
             </span>
           )}
 
-          {/* <label htmlFor="start-date">Start Date</label> */}
           <Controller
             control={control}
             name="startDate"
@@ -183,7 +180,7 @@ function FormComponent() {
             <input
               id="street"
               aria-labelledby="street"
-            aria-required="true"
+              aria-required="true"
               type="text"
               name="street"
               {...register("street", {
@@ -240,7 +237,13 @@ function FormComponent() {
           </button>
         </div>
       </div>
-      {openModal && <Modal closeModal={setOpenModal} modalText={ModalText} />}
+      {OpenModal && (
+        <Modal
+          ModalStatus={OpenModal}
+          setModalStatus={setOpenModal}
+          ModalChildren={ModalText}
+        />
+      )}
     </>
   );
 }
