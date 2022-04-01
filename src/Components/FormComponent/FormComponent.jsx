@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "../FormComponent/FormComponent.module.css";
-// import Modal from "../Modal/Modal";
 import allStates from "../../Data/StatesData";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -13,10 +12,11 @@ import DatePicker, { formatDate } from "../DatePicker/DatePicker";
 import { addDays, getDay } from "date-fns";
 import { Modal } from "@claudedacc/modal";
 
+
 function FormComponent() {
   const users = useSelector((state) => state.employees);
   const [OpenModal, setOpenModal] = useState(false);
-  const [ModalText, setModalText] = useState("Employee Created!");
+  const [ModalText, setModalText] = useState("");
   const dispatch = useDispatch();
   const {
     register,
@@ -96,9 +96,14 @@ function FormComponent() {
             name="firstName"
             {...register("firstName", {
               required: "FirstName is required",
+              pattern: {
+                value:
+                  /^[a-zA-ZîèéïÉÈ][a-zA-ZàâçéèêëîïùûüÜÛÙÏÎËÊÈÉÇÂÀ]+([^0-9]*)$([-'\s][a-zA-ZÜüàÀÏÎÉÈîèéï][a-zA-ZàâçéèêëîïùûüÜÛÙÏÎËÊÈÉÇÂÀ]+([^0-9]*)$)?/,
+                message: "FirstName includes invalid characters",
+              },
               minLength: {
                 value: 3,
-                message: "Your firstName Should at least 3 characters!",
+                message: "Your firstName must at least 3 characters!",
               },
             })}
           />
@@ -116,9 +121,14 @@ function FormComponent() {
             name="lastName"
             {...register("lastName", {
               required: "LastName is required",
+              pattern: {
+                value:
+                  /^[a-zA-ZîèéïÉÈ][a-zA-ZàâçéèêëîïùûüÜÛÙÏÎËÊÈÉÇÂÀ]+([^0-9]*)$([-'\s][a-zA-ZÜüàÀÏÎÉÈîèéï][a-zA-ZàâçéèêëîïùûüÜÛÙÏÎËÊÈÉÇÂÀ]+([^0-9]*)$)?/,
+                message: "LastName includes invalid characters",
+              },
               minLength: {
                 value: 3,
-                message: "Your lastName Should at least 3 characters!",
+                message: "Your lastName must at least 3 characters!",
               },
             })}
           />
