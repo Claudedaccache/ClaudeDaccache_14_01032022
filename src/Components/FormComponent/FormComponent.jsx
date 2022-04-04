@@ -12,7 +12,6 @@ import DatePicker, { formatDate } from "../DatePicker/DatePicker";
 import { addDays, getDay } from "date-fns";
 import { Modal } from "simple-modal-component";
 
-
 function FormComponent() {
   const users = useSelector((state) => state.employees);
   const [OpenModal, setOpenModal] = useState(false);
@@ -22,7 +21,7 @@ function FormComponent() {
     register,
     handleSubmit,
     control,
-    formState: { errors, isValid, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isValid, isSubmitSuccessful },
   } = useForm({
     mode: "onTouched",
     defaultValues: {},
@@ -240,7 +239,7 @@ function FormComponent() {
         <div className={styles.SaveBtnContainer}>
           <button
             className={styles.SaveBtn}
-            disabled={isSubmitted && !isValid}
+            disabled={!isValid}
             onClick={handleSubmit(onSubmit)}
           >
             Save
