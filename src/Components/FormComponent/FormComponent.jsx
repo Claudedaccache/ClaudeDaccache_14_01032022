@@ -10,7 +10,7 @@ import Dropdown from "../DropDown/DropDown";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker, { formatDate } from "../DatePicker/DatePicker";
 import { addDays, getDay } from "date-fns";
-import { Modal } from "@claudedacc/modal";
+import { Modal } from "simple-modal-component";
 
 
 function FormComponent() {

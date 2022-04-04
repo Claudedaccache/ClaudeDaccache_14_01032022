@@ -1,1 +1,1 @@
-declare module '@claudedacc/modal'
+declare module 'simple-modal-component'
