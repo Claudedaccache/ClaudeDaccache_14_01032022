@@ -59,7 +59,7 @@ function FormComponent() {
    * It creates a new employee and adds it to the list of employees.
    * @param {object} data
    */
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     if (isSubmitSuccessful === true && checkEmployee(users, data) === false) {
       console.log(data);
       dispatch(createEmployee(data));
